@@ -1,130 +1,223 @@
 <script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
+  var gk_isXlsx = false;
+  var gk_xlsxFileLookup = {};
+  var gk_fileData = {};
+  function filledCell(cell) {
+    return cell !== "" && cell != null;
+  }
+  function loadFileData(filename) {
+    if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+      try {
+        var workbook = XLSX.read(gk_fileData[filename], { type: "base64" });
+        var firstSheetName = workbook.SheetNames[0];
+        var worksheet = workbook.Sheets[firstSheetName];
 
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
+        // Convert sheet to JSON to filter blank rows
+        var jsonData = XLSX.utils.sheet_to_json(worksheet, {
+          header: 1,
+          blankrows: false,
+          defval: "",
+        });
+        // Filter out blank rows (rows where all cells are empty, null, or undefined)
+        var filteredData = jsonData.filter((row) => row.some(filledCell));
 
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
+        // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+        var headerRowIndex = filteredData.findIndex(
+          (row, index) =>
+            row.filter(filledCell).length >=
+            filteredData[index + 1]?.filter(filledCell).length,
+        );
+        // Fallback
+        if (headerRowIndex === -1 || headerRowIndex > 25) {
+          headerRowIndex = 0;
+        }
 
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+        // Convert filtered JSON back to CSV
+        var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+        csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+        return csv;
+      } catch (e) {
+        console.error(e);
+        return "";
+      }
+    }
+    return gk_fileData[filename] || "";
+  }
+</script>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ICCV 2025 Workshop on Generative AI for Storytelling (AISTORY)</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      ICCV 2026 Workshop on Generative AI for Storytelling (AISTORY)
+    </title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <style>
-        body { font-family: Arial, sans-serif; }
-        .header { background-color: #f8f9fa; padding: 2rem; text-align: center; }
-        .section { padding: 2rem; }
-        .nav-link { font-weight: bold; }
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .header {
+        background-color: #f8f9fa;
+        padding: 2rem;
+        text-align: center;
+      }
+      .section {
+        padding: 2rem;
+      }
+      .nav-link {
+        font-weight: bold;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="header">
-        <h1>ICCV 2025 Workshop on Generative AI for Storytelling (AISTORY)</h1>
-        <p>October 20, 2025 | Hawai'i Convention Center 302A, Honolulu, Hawai'i</p>
-        <a href="https://iccv.thecvf.com" class="btn btn-primary">ICCV 2025</a>
+      <h1>CVPR 2026 Workshop on Generative AI for Storytelling (AISTORY)</h1>
+      <p>June, 2026 | Denver, Colorado</p>
+      <a href="https://cvpr.thecvf.com/" class="btn btn-primary">CVPR 2026</a>
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#call-for-papers">Call for Papers</a></li>
-                                            <li class="nav-item"><a class="nav-link" href="#call-for-demos">Call for Demos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#schedule">Schedule</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#speakers">Speakers</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#organizers">Organizers</a></li>
-                </ul>
-            </div>
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#call-for-papers">Call for Papers</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#call-for-demos">Call for Demos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#schedule">Schedule</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#speakers">Speakers</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#organizers">Organizers</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="previousEditionsDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Previous Editions
+              </a>
+              <ul
+                class="dropdown-menu"
+                aria-labelledby="previousEditionsDropdown"
+              >
+                <li><a class="dropdown-item" href="2025.html">2025</a></li>
+              </ul>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
 
     <div class="container">
-        <div id="about" class="section">
-            <h2>About</h2>
-            <p>Generative AI has made significant strides in creating visually impressive content, yet it often falls short in producing coherent and engaging narratives. Storytelling, whether in written or visual form, requires consistency and depth across multiple aspects, such as character development, plot progression, and setting dynamics, which current generative models struggle to achieve. This workshop aims to address these limitations by exploring the integration of advanced visual generative models, large language models, and multi-modal AI techniques. Our focus is on advancing the capabilities of generative AI to produce coherent and dynamic narratives that maintain visual consistency and accurately convey story elements, rather than just cool graphics. We seek to push the boundaries of generative AI to create storytelling experiences that are both visually engaging and narratively cohesive, which further expands the applicability of AI to content creation.</p>
-               <p> Topics include:</p>
-            <ul>
-                <li>Cross-Modal Storytelling with Text and Visual Generation</li>
-                <li>Character Consistency in Multi-Modal Storytelling</li>
-                <li>Visual Editing and Consistency for Stories</li>
-                <li>Large Language Models for Coherent Story Generation</li>
-<li>Vision and Language Models for Visual Narrative Generation</li>
-<li>Reader-Interactive Story Elements with Real-Time Visual Adaptation</li>
-<li>Symbolism and Thematic Representation in Generated Visuals</li>
-<li>Temporal Progression in Visual Storytelling</li>
-<li>Synchronizing Narrative Tone and Visual Style</li>
-<li>Using Visual Prompts to Guide AI-Generated Storylines</li>
-<li>AI-Generated Visuals for Mood and Atmosphere in Stories</li>
-<li>Visual Interpretation of Textual Plot</li>
-<li>Generating Emotionally Expressive Character Art for Narratives</li>
-<li>Ethical Implications of AI in Multi-Modal Narrative Creation</li>
-            </ul>
-            <p><strong>Format:</strong> In-person, Half-day<br>
-               <strong>Contact:</strong> Andrew Shin, shin@inl.ics.keio.ac.jp</p>
-        </div>
+      <div id="about" class="section">
+        <h2>About</h2>
+        <p>
+          Generative AI has made significant strides in creating visually
+          impressive content, yet it often falls short in producing coherent and
+          engaging narratives. Storytelling, whether in written or visual form,
+          requires consistency and depth across multiple aspects, such as
+          character development, plot progression, and setting dynamics, which
+          current generative models struggle to achieve. This workshop aims to
+          address these limitations by exploring the integration of advanced
+          visual generative models, large language models, and multi-modal AI
+          techniques. Our focus is on advancing the capabilities of generative
+          AI to produce coherent and dynamic narratives that maintain visual
+          consistency and accurately convey story elements, rather than just
+          cool graphics. We seek to push the boundaries of generative AI to
+          create storytelling experiences that are both visually engaging and
+          narratively cohesive, which further expands the applicability of AI to
+          content creation.
+        </p>
+        <p>Topics include:</p>
+        <ul>
+          <li>Cross-Modal Storytelling with Text and Visual Generation</li>
+          <li>Character Consistency in Multi-Modal Storytelling</li>
+          <li>Visual Editing and Consistency for Stories</li>
+          <li>Large Language Models for Coherent Story Generation</li>
+          <li>Vision and Language Models for Visual Narrative Generation</li>
+          <li>
+            Reader-Interactive Story Elements with Real-Time Visual Adaptation
+          </li>
+          <li>Symbolism and Thematic Representation in Generated Visuals</li>
+          <li>Temporal Progression in Visual Storytelling</li>
+          <li>Synchronizing Narrative Tone and Visual Style</li>
+          <li>Using Visual Prompts to Guide AI-Generated Storylines</li>
+          <li>AI-Generated Visuals for Mood and Atmosphere in Stories</li>
+          <li>Visual Interpretation of Textual Plot</li>
+          <li>
+            Generating Emotionally Expressive Character Art for Narratives
+          </li>
+          <li>Ethical Implications of AI in Multi-Modal Narrative Creation</li>
+        </ul>
+        <p>
+          <strong>Format:</strong> In-person, Half-day<br />
+          <strong>Contact:</strong> Andrew Shin, shin@inl.ics.keio.ac.jp
+        </p>
+      </div>
 
-        <div id="call-for-papers" class="section">
-            <h2>Call for Papers</h2>
-            <p>We invite [4-page short papers/ 8-page long papers] (excluding references) on topics listed above or any other relevant topic. Review process will be under double-blind system. Accepted papers will be included in ICCV proceeding.</p>
-            <ul>
-                <li><strong>Deadline:</strong> <s>July 6, 2025</s> Submission is closed now.</li>
-                <li><strong>Submission:</strong> <a href="https://openreview.net/group?id=thecvf.com/ICCV/2025/Workshop/AISTORY&referrer=%5BHomepage%5D(%2F)#tab-your-consoles">OpenReview</a></li>
-                                    <li><strong>Notification:</strong> <s> July 17, 2025</s> </li>
-                <li><strong>Camera-Ready Submission:</strong><s>  August 11, 2025</s> </li>
-                <li><strong>Guidelines:</strong> Follow <a href="https://iccv.thecvf.com">ICCV 2025 Author Kit</a>.</li>
-            </ul>
-        </div>
+      <div id="call-for-papers" class="section">
+        <h2>Call for Papers</h2>
+        <p>
+          We invite [4-page short papers/ 8-page long papers] (excluding
+          references) on topics listed above or any other relevant topic. Review
+          process will be under double-blind system. Accepted papers will be
+          included in ICCV proceeding.
+        </p>
+        <ul>
+          <li><strong>Deadline:</strong> March 15, 2026</li>
+          <li>
+            <strong>Submission:</strong>
+            <a
+              href="https://openreview.net/group?id=thecvf.com/ICCV/2025/Workshop/AISTORY&referrer=%5BHomepage%5D(%2F)#tab-your-consoles"
+              >OpenReview</a
+            >
+          </li>
+          <li><strong>Notification:</strong> March 31, 2026</li>
+          <!-- <li><strong>Camera-Ready Submission:</strong><s>  August 11, 2025</s> </li> -->
+          <!-- <li><strong>Guidelines:</strong> Follow <a href="https://iccv.thecvf.com">ICCV 2025 Author Kit</a>.</li> -->
+        </ul>
+      </div>
 
-            <div id="call-for-demos" class="section">
-            <h2>Call for Demos</h2>
-            <p>We invite demo works! Any type of medium (e.g., videos, images, audio, text, etc.) that involve elements of storytelling is welcome.</p>
-            <ul>
+      <div id="call-for-demos" class="section">
+        <h2>Call for Demos</h2>
+        <p>
+          We invite demo works! Any type of medium (e.g., videos, images, audio,
+          text, etc.) that involve elements of storytelling is welcome.
+        </p>
+        <!-- <ul>
                 <li><strong>Deadline:</strong><s>June 27, 2025</s> <s>August 31, 2025</s> </li>
                 <li><strong>Submission:</strong> Send directly to <a href= "mailto:shin@inl.ics.keio.ac.jp">us</a>! (maximum file size: 2.5GB) </li>
-            </ul>
-        </div>
+            </ul> -->
+      </div>
 
-        <div id="schedule" class="section">
-            <h2>Tentative Schedule</h2>
-            <ul>
+      <div id="schedule" class="section">
+        <h2>Tentative Schedule</h2>
+        <!-- <ul>
                 <li><strong>08:15-08:25:</strong> Welcome words by organizers</li>
                 <li><strong>08:25-08:55:</strong> Invited Talk 1: Novel Post-Training Algorithms for LLMs to Prevent Harmful Contents and Hallucinations (<a href="https://sites.google.com/site/xianchaowu2012/">Xianchao Wu</a>)</li>
                 <li><strong>08:55-09:25:</strong> Invited Talk 2: How Human Evolve Story Telling ability, evidence from neuronscience and art (<a href="https://sites.google.com/view/linguedu/home">Lin Gu</a>)</li>
@@ -159,203 +252,206 @@
                 
                 <li><strong>11:00-11:30:</strong> Invited Talk 3: <a href="https://xiaoqian-shen.github.io/StoryGPT-V/">StoryGPT-V: Large Language Models as Consistent Story Visualizers</a> (<a href="https://xiaoqian-shen.github.io/">Xiaoqian Shen</a>)</li>
                 <li><strong>11:30-12:00:</strong> Invited Talk 4: <a href="https://weijiawu.github.io/MovieBench/">MovieBench: A Hierarchical Movie Level Dataset for Long Video Generation</a> (<a href="https://weijiawu.github.io/">Weijia Wu</a>)</li>        
-            </ul>
-        </div>
+            </ul> -->
+      </div>
 
-<style>
-    .speakers-section {
-        max-width: 800px;
-        margin: 0 auto;
-    }
-    .speaker-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 30px;
-    }
-    .speaker-img {
-        width: 120px;
-        height: 120px;
-        object-fit: cover;
-        border-radius: 50%;
-        margin-right: 20px;
-        border: 2px solid #ccc;
-    }
-    .speaker-details {
-        line-height: 1.4;
-    }
-    .speaker-name {
-        font-weight: bold;
-        font-size: 1.1em;
-    }
-    .speaker-affiliation {
-        font-size: 0.95em;
-        color: #555;
-    }
-    .speaker-title {
-        margin-top: 5px;
-    }
-    .speaker-title a {
-        text-decoration: none;
-        color: #007acc;
-    }
-</style>
+      <style>
+        .speakers-section {
+          max-width: 800px;
+          margin: 0 auto;
+        }
+        .speaker-item {
+          display: flex;
+          align-items: center;
+          margin-bottom: 30px;
+        }
+        .speaker-img {
+          width: 120px;
+          height: 120px;
+          object-fit: cover;
+          border-radius: 50%;
+          margin-right: 20px;
+          border: 2px solid #ccc;
+        }
+        .speaker-details {
+          line-height: 1.4;
+        }
+        .speaker-name {
+          font-weight: bold;
+          font-size: 1.1em;
+        }
+        .speaker-affiliation {
+          font-size: 0.95em;
+          color: #555;
+        }
+        .speaker-title {
+          margin-top: 5px;
+        }
+        .speaker-title a {
+          text-decoration: none;
+          color: #007acc;
+        }
+      </style>
 
-<div id="speakers" class="section speakers-section">
-    <h2>Invited Speakers</h2>
+      <div id="speakers" class="section">
+        <h2>Invited Speakers</h2>
 
-    <div class="speaker-item">
-        <a href="https://xiaoqian-shen.github.io/">
-            <img class="speaker-img" src="img/xiaoqian.png">
-        </a>
-        <div class="speaker-details">
-            <div class="speaker-name">Xiaoqian Shen</div>
-            <div class="speaker-affiliation">KAUST</div>
-            <div class="speaker-title">
+        <div class="speaker-item">
+          <a href="">
+            <img class="speaker-img" src="img/" />
+          </a>
+          <div class="speaker-details">
+            <div class="speaker-name">Chao Huang</div>
+            <div class="speaker-affiliation">University of Rochester</div>
+            <!-- <div class="speaker-title">
                 <a href="https://xiaoqian-shen.github.io/StoryGPT-V/">StoryGPT-V: Large Language Models as Consistent Story Visualizers</a>
-            </div>
+            </div> -->
+          </div>
         </div>
-    </div>
 
-    <div class="speaker-item">
-        <a href="https://sites.google.com/site/xianchaowu2012/">
-            <img class="speaker-img" src="img/wu.jpg">
-        </a>
-        <div class="speaker-details">
-            <div class="speaker-name">Xianchao Wu</div>
-            <div class="speaker-affiliation">NVIDIA</div>
-            <div class="speaker-title">
+        <div class="speaker-item">
+          <a href="">
+            <img class="speaker-img" src="img/" />
+          </a>
+          <div class="speaker-details">
+            <div class="speaker-name">Yuchao Gu</div>
+            <div class="speaker-affiliation">
+              University of Singapore → NVIDIA
+            </div>
+            <!-- <div class="speaker-title">
                 Novel Post-Training Algorithms for LLMs to Prevent Harmful Contents and Hallucinations
-            </div>
+            </div> -->
+          </div>
         </div>
-    </div>
 
-    <div class="speaker-item">
-        <a href="https://weijiawu.github.io/">
-            <img class="speaker-img" src="img/weijia.jpg">
-        </a>
-        <div class="speaker-details">
-            <div class="speaker-name">Weijia Wu</div>
-            <div class="speaker-affiliation">NUS</div>
-            <div class="speaker-title">
+        <div class="speaker-item">
+          <a href="">
+            <img class="speaker-img" src="img/" />
+          </a>
+          <div class="speaker-details">
+            <div class="speaker-name">Kiyoharu Aizawa</div>
+            <div class="speaker-affiliation">University of Tokyo</div>
+            <!-- <div class="speaker-title">
                 <a href="https://weijiawu.github.io/MovieBench/">MovieBench: A Hierarchical Movie Level Dataset for Long Video Generation</a> (virtual)
-            </div>
+            </div> -->
+          </div>
         </div>
-    </div>
+      </div>
 
-    <div class="speaker-item">
-        <a href="https://sites.google.com/view/linguedu/home">
-            <img class="speaker-img" src="img/gu.jpg">
-        </a>
-        <div class="speaker-details">
-            <div class="speaker-name">Lin Gu</div>
-            <div class="speaker-affiliation">RIKEN AIP</div>
-            <div class="speaker-title">
-                How Human Evolve Story Telling ability, evidence from neuronscience and art
-            </div>
+      <style>
+        .team-table {
+          width: 100%;
+          text-align: center;
+        }
+        .team-img {
+          width: 150px;
+          height: 150px;
+          object-fit: cover;
+          border-radius: 50%;
+          margin: 10px auto;
+          display: block;
+          border: 2px solid #ccc; /* optional: subtle border */
+        }
+        .team-name {
+          margin-top: 5px;
+          font-weight: bold;
+        }
+        .team-affiliation {
+          font-size: 0.9em;
+          color: #555;
+        }
+      </style>
+      <div id="organizers" class="section">
+        <h2>Organizers</h2>
+
+        <div class="table-wrapper" style="width: 100%">
+          <table cellpadding="0" cellspacing="0">
+            <tr>
+              <td>
+                <a href="https://shinandrew.github.io/">
+                  <img class="team-img" src="img/andrew.jpg" />
+                </a>
+                <div class="team-name">Andrew Shin</div>
+                <div class="team-affiliation">Keio University</div>
+              </td>
+              <td>
+                <a href="https://www.mori.ai/">
+                  <img class="team-img" src="img/mori.jpg" />
+                </a>
+                <div class="team-name">Yusuke Mori</div>
+                <div class="team-affiliation">The University of Tokyo</div>
+              </td>
+              <td>
+                <a href="">
+                  <img class="team-img" src="img/leo.jpg" />
+                </a>
+                <div class="team-name">Yolo Yunlong Tang</div>
+                <div class="team-affiliation">University of Rochester</div>
+              </td>
+              <td>
+                <a href="https://www.linkedin.com/in/leo-vitasovic/">
+                  <img class="team-img" src="img/leo.jpeg" />
+                </a>
+                <div class="team-name">Leo Vitasovic</div>
+                <div class="team-affiliation">IT University of Copenhagen</div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://ii-research-yu.github.io/">
+                  <img class="team-img" src="img/yu.jpg" />
+                </a>
+                <div class="team-name">Haitao Yu</div>
+                <div class="team-affiliation">University of Tsukuba</div>
+              </td>
+              <td>
+                <a href="https://sites.google.com/view/linguedu/home">
+                  <img class="team-img" src="img/gu.jpg" />
+                </a>
+                <div class="team-name">Lin Gu</div>
+                <div class="team-affiliation">Tohoku University</div>
+              </td>
+              <td>
+                <a href="https://sites.google.com/site/xianchaowu2012/">
+                  <img class="team-img" src="img/wu.jpg" />
+                </a>
+                <div class="team-name">Xianchao Wu</div>
+                <div class="team-affiliation">NVIDIA</div>
+              </td>
+              <td>
+                <a href="https://hanakopecka.github.io/">
+                  <img class="team-img" src="img/kopecka.jpg" />
+                </a>
+                <div class="team-name">Hana Kopecka</div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="">
+                  <img class="team-img" src="img/" />
+                </a>
+                <div class="team-name">Kiymet Akdemir</div>
+                <div class="team-affiliation">Virginia Tech</div>
+              </td>
+              <td>
+                <a href="">
+                  <img class="team-img" src="img/" />
+                </a>
+                <div class="team-name">Weijia Wu</div>
+                <div class="team-affiliation">
+                  National University of Singapore
+                </div>
+              </td>
+            </tr>
+          </table>
         </div>
-    </div>
-</div>
-
-
-
-            <style>
-    .team-table {
-        width: 100%;
-        text-align: center;
-    }
-    .team-img {
-        width: 150px;
-        height: 150px;
-        object-fit: cover;
-        border-radius: 50%;
-        margin: 10px auto;
-        display: block;
-        border: 2px solid #ccc; /* optional: subtle border */
-    }
-    .team-name {
-        margin-top: 5px;
-        font-weight: bold;
-    }
-    .team-affiliation {
-        font-size: 0.9em;
-        color: #555;
-    }
-</style>
-        <div id="organizers" class="section">
-            <h2>Organizers</h2>
-   
-                <div class="table-wrapper" style="width:100%">
-        <table cellpadding="0" cellspacing="0">
-    <tr>
-        <td>
-            <a href="https://shinandrew.github.io/">
-                <img class="team-img" src="img/andrew.jpg">
-            </a>
-            <div class="team-name">Andrew Shin</div>
-            <div class="team-affiliation">Keio University</div>
-        </td>
-        <td>
-            <a href="https://www.mori.ai/">
-                <img class="team-img" src="img/mori.jpg">
-            </a>
-            <div class="team-name">Yusuke Mori</div>
-                            <div class="team-affiliation">The University of Tokyo</div>
-
-        </td>
-        <td>
-            <a href="https://inside-brain.net/">
-                <img class="team-img" src="img/yamane.jpg">
-            </a>
-            <div class="team-name">Hiroaki Yamane</div>
-            <div class="team-affiliation">Fujitsu Laboratories</div>
-        </td>
-        <td>
-            <a href="https://hanakopecka.github.io/">
-                <img class="team-img" src="img/kopecka.jpg">
-            </a>
-            <div class="team-name">Hana Kopecka</div>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <a href="https://www.fun.ac.jp/en/faculty/murai-hajime">
-                <img class="team-img" src="img/murai.png">
-            </a>
-            <div class="team-name">Hajime Murai</div>
-            <div class="team-affiliation">Future University Hakodate</div>
-        </td>
-        <td>
-            <a href="https://sites.google.com/site/xianchaowu2012/">
-                <img class="team-img" src="img/wu.jpg">
-            </a>
-            <div class="team-name">Xianchao Wu</div>
-            <div class="team-affiliation">NVIDIA</div>
-        </td>
-        <td>
-            <a href="https://sites.google.com/view/linguedu/home">
-                <img class="team-img" src="img/gu.jpg">
-            </a>
-            <div class="team-name">Lin Gu</div>
-            <div class="team-affiliation">RIKEN AIP</div>
-        </td>
-        <td>
-            <a href="https://ii-research-yu.github.io/">
-                <img class="team-img" src="img/yu.jpg">
-            </a>
-            <div class="team-name">Haitao Yu</div>
-            <div class="team-affiliation">University of Tsukuba</div>
-        </td>
-    </tr>
-
-        </table>
-</div>
-        </div>
+      </div>
     </div>
 
     <footer class="text-center py-3">
-        <p>&copy; 2025 AISTORY</p>
+      <p>&copy; 2026 AISTORY</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+  </body>
 </html>
