@@ -257,21 +257,17 @@
       </div>
 
       <style>
-        .speakers-section {
-          max-width: 800px;
-          margin: 0 auto;
-        }
-        .speaker-item {
-          display: flex;
-          align-items: center;
+        .speaker-card {
+          text-align: center;
           margin-bottom: 30px;
         }
         .speaker-img {
-          width: 120px;
-          height: 120px;
+          width: 150px;
+          height: 150px;
           object-fit: cover;
           border-radius: 50%;
-          margin-right: 20px;
+          margin: 0 auto 15px;
+          display: block;
           border: 2px solid #ccc;
         }
         .speaker-details {
@@ -280,6 +276,7 @@
         .speaker-name {
           font-weight: bold;
           font-size: 1.1em;
+          margin-bottom: 5px;
         }
         .speaker-affiliation {
           font-size: 0.95em;
@@ -297,46 +294,54 @@
       <div id="speakers" class="section">
         <h2>Invited Speakers</h2>
 
-        <div class="speaker-item">
-          <a href="https://wikichao.github.io/">
-            <img class="speaker-img" src="img/chao.jpg" />
-          </a>
-          <div class="speaker-details">
-            <div class="speaker-name">Chao Huang</div>
-            <div class="speaker-affiliation">
-              University of Rochester, Tencent
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+          <div class="col">
+            <div class="speaker-card">
+              <a href="https://wikichao.github.io/">
+                <img class="speaker-img" src="img/chao.jpg" />
+              </a>
+              <div class="speaker-details">
+                <div class="speaker-name">Chao Huang</div>
+                <div class="speaker-affiliation">
+                  University of Rochester, Tencent
+                </div>
+                <!-- <div class="speaker-title">
+                    <a href="https://xiaoqian-shen.github.io/StoryGPT-V/">StoryGPT-V: Large Language Models as Consistent Story Visualizers</a>
+                </div> -->
+              </div>
             </div>
-            <!-- <div class="speaker-title">
-                <a href="https://xiaoqian-shen.github.io/StoryGPT-V/">StoryGPT-V: Large Language Models as Consistent Story Visualizers</a>
-            </div> -->
           </div>
-        </div>
 
-        <div class="speaker-item">
-          <a href="https://ycgu.site/">
-            <img class="speaker-img" src="img/guyuchao.jpg" />
-          </a>
-          <div class="speaker-details">
-            <div class="speaker-name">Yuchao Gu</div>
-            <div class="speaker-affiliation">
-              University of Singapore → NVIDIA
+          <div class="col">
+            <div class="speaker-card">
+              <a href="https://ycgu.site/">
+                <img class="speaker-img" src="img/guyuchao.jpg" />
+              </a>
+              <div class="speaker-details">
+                <div class="speaker-name">Yuchao Gu</div>
+                <div class="speaker-affiliation">
+                  University of Singapore → NVIDIA
+                </div>
+                <!-- <div class="speaker-title">
+                    Novel Post-Training Algorithms for LLMs to Prevent Harmful Contents and Hallucinations
+                </div> -->
+              </div>
             </div>
-            <!-- <div class="speaker-title">
-                Novel Post-Training Algorithms for LLMs to Prevent Harmful Contents and Hallucinations
-            </div> -->
           </div>
-        </div>
 
-        <div class="speaker-item">
-          <a href="https://en.wikipedia.org/wiki/Kiyoharu_Aizawa">
-            <img class="speaker-img" src="img/kiyoharu.jpeg" />
-          </a>
-          <div class="speaker-details">
-            <div class="speaker-name">Kiyoharu Aizawa</div>
-            <div class="speaker-affiliation">University of Tokyo</div>
-            <!-- <div class="speaker-title">
-                <a href="https://weijiawu.github.io/MovieBench/">MovieBench: A Hierarchical Movie Level Dataset for Long Video Generation</a> (virtual)
-            </div> -->
+          <div class="col">
+            <div class="speaker-card">
+              <a href="https://en.wikipedia.org/wiki/Kiyoharu_Aizawa">
+                <img class="speaker-img" src="img/kiyoharu.jpeg" />
+              </a>
+              <div class="speaker-details">
+                <div class="speaker-name">Kiyoharu Aizawa</div>
+                <div class="speaker-affiliation">University of Tokyo</div>
+                <!-- <div class="speaker-title">
+                    <a href="https://weijiawu.github.io/MovieBench/">MovieBench: A Hierarchical Movie Level Dataset for Long Video Generation</a> (virtual)
+                </div> -->
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -347,13 +352,19 @@
           text-align: center;
         }
         .team-img {
-          width: 150px;
-          height: 150px;
+          width: 100px;
+          height: 100px;
           object-fit: cover;
           border-radius: 50%;
           margin: 10px auto;
           display: block;
           border: 2px solid #ccc; /* optional: subtle border */
+        }
+        @media (min-width: 768px) {
+          .team-img {
+            width: 150px;
+            height: 150px;
+          }
         }
         .team-name {
           margin-top: 5px;
@@ -367,86 +378,109 @@
       <div id="organizers" class="section">
         <h2>Organizers</h2>
 
-        <div class="table-wrapper" style="width: 100%">
-          <table cellpadding="0" cellspacing="0">
-            <tr>
-              <td>
-                <a href="https://shinandrew.github.io/">
-                  <img class="team-img" src="img/andrew.jpg" />
-                </a>
-                <div class="team-name">Andrew Shin</div>
-                <div class="team-affiliation">Keio University</div>
-              </td>
-              <td>
-                <a href="https://www.mori.ai/">
-                  <img class="team-img" src="img/mori.jpg" />
-                </a>
-                <div class="team-name">Yusuke Mori</div>
-                <div class="team-affiliation">The University of Tokyo</div>
-              </td>
-              <td>
-                <a href="https://yunlong10.github.io/">
-                  <img class="team-img" src="img/tang.jpg" />
-                </a>
-                <div class="team-name">Yolo Yunlong Tang</div>
-                <div class="team-affiliation">University of Rochester</div>
-              </td>
-              <td>
-                <a href="https://www.linkedin.com/in/leo-vitasovic/">
-                  <img class="team-img" src="img/leo.jpeg" />
-                </a>
-                <div class="team-name">Leo Vitasovic</div>
-                <div class="team-affiliation">IT University of Copenhagen</div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <a href="https://ii-research-yu.github.io/">
-                  <img class="team-img" src="img/yu.jpg" />
-                </a>
-                <div class="team-name">Haitao Yu</div>
-                <div class="team-affiliation">University of Tsukuba</div>
-              </td>
-              <td>
-                <a href="https://sites.google.com/view/linguedu/home">
-                  <img class="team-img" src="img/gu.jpg" />
-                </a>
-                <div class="team-name">Lin Gu</div>
-                <div class="team-affiliation">Tohoku University</div>
-              </td>
-              <td>
-                <a href="https://sites.google.com/site/xianchaowu2012/">
-                  <img class="team-img" src="img/wu.jpg" />
-                </a>
-                <div class="team-name">Xianchao Wu</div>
-                <div class="team-affiliation">NVIDIA</div>
-              </td>
-              <td>
-                <a href="https://hanakopecka.github.io/">
-                  <img class="team-img" src="img/kopecka.jpg" />
-                </a>
-                <div class="team-name">Hana Kopecka</div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <a href="">
-                  <img class="team-img" src="img/" />
-                </a>
-                <div class="team-name">Kiymet Akdemir</div>
-                <div class="team-affiliation">Virginia Tech</div>
-              </td>
-              <td>
-                <a href="https://weijiawu.github.io/MovieBench/">
-                  <img class="team-img" src="img/weijia.jpg" />
-                </a>
-                <div class="team-name">Weijia Wu</div>
-                <div class="team-affiliation">
-                  National University of Singapore
-                </div>
-              </td>
-            </tr>
-          </table>
+        <div
+          class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4"
+        >
+          <div class="col">
+            <div class="text-center">
+              <a href="https://shinandrew.github.io/">
+                <img class="team-img" src="img/andrew.jpg" />
+              </a>
+              <div class="team-name">Andrew Shin</div>
+              <div class="team-affiliation">Keio University</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="text-center">
+              <a href="https://www.mori.ai/">
+                <img class="team-img" src="img/mori.jpg" />
+              </a>
+              <div class="team-name">Yusuke Mori</div>
+              <div class="team-affiliation">The University of Tokyo</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="text-center">
+              <a href="https://yunlong10.github.io/">
+                <img class="team-img" src="img/tang.jpg" />
+              </a>
+              <div class="team-name">Yolo Yunlong Tang</div>
+              <div class="team-affiliation">University of Rochester</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="text-center">
+              <a href="https://www.linkedin.com/in/leo-vitasovic/">
+                <img class="team-img" src="img/leo.jpeg" />
+              </a>
+              <div class="team-name">Leo Vitasovic</div>
+              <div class="team-affiliation">IT University of Copenhagen</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="text-center">
+              <a href="https://ii-research-yu.github.io/">
+                <img class="team-img" src="img/yu.jpg" />
+              </a>
+              <div class="team-name">Haitao Yu</div>
+              <div class="team-affiliation">University of Tsukuba</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="text-center">
+              <a href="https://sites.google.com/view/linguedu/home">
+                <img class="team-img" src="img/gu.jpg" />
+              </a>
+              <div class="team-name">Lin Gu</div>
+              <div class="team-affiliation">Tohoku University</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="text-center">
+              <a href="https://sites.google.com/site/xianchaowu2012/">
+                <img class="team-img" src="img/wu.jpg" />
+              </a>
+              <div class="team-name">Xianchao Wu</div>
+              <div class="team-affiliation">NVIDIA</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="text-center">
+              <a href="https://hanakopecka.github.io/">
+                <img class="team-img" src="img/kopecka.jpg" />
+              </a>
+              <div class="team-name">Hana Kopecka</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="text-center">
+              <a href="">
+                <img class="team-img" src="img/" />
+              </a>
+              <div class="team-name">Kiymet Akdemir</div>
+              <div class="team-affiliation">Virginia Tech</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="text-center">
+              <a href="https://weijiawu.github.io/MovieBench/">
+                <img class="team-img" src="img/weijia.jpg" />
+              </a>
+              <div class="team-name">Weijia Wu</div>
+              <div class="team-affiliation">
+                National University of Singapore
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="text-center">
+              <a href="https://www.cs.rochester.edu/~cxu22/">
+                <img class="team-img" src="img/cxu.jpg" />
+              </a>
+              <div class="team-name">Chenliang Xu</div>
+              <div class="team-affiliation">University of Rochester</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
